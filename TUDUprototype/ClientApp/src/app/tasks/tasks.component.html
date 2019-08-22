@@ -1,0 +1,20 @@
+<h1>Tasks</h1>
+
+<p *ngIf="!tasks"><em>Loading...</em></p>
+
+<table *ngIf="tasks">
+  <thead>
+    <tr>
+      <th>TaskID</th>
+      <th>TaskName</th>
+      <th>OriginalProjectID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let task of tasks'>
+      <td>{{task.id}}</td>
+      <td>{{task.taskName}}</td>
+      <td>{{task.originalProjectID}}</td>
+    </tr>
+  </tbody>
+</table>
