@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TUDUprototype.Models;
 
 namespace TUDUprototype.Controllers
 {
@@ -14,7 +13,7 @@ namespace TUDUprototype.Controllers
     {
         protected readonly Models.TUDUDbContext dbContext;
 
-        public TaskItemsController(TUDUDbContext dbContext)
+        public TaskItemsController(Models.TUDUDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
