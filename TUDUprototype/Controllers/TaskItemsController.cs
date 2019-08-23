@@ -31,5 +31,26 @@ namespace TUDUprototype.Controllers
                 throw e;
             }
         }
+
+        [HttpPost("TaskItem")]
+        public Models.TaskItem PostTaskItem([FromBody] Models.TaskItem taskItem)
+        {
+            try
+            {
+                if(!ModelState.IsValid)
+                {
+                    throw new ArgumentException();
+                }
+
+                dbContext.TaskItems.Add(taskItem);
+                dbContext.SaveChanges();
+                var result = dbContext.Entry(taskItem).Entity;
+                return result;
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace TUDUprototype.Models
             OriginalProjectID = originalProjectID;
         }
 
-        public int ID { get; set; }
+        public int? ID { get; set; }
         [MaxLength(50)]
         public string TaskName { get; set; }
         public int OriginalProjectID { get; set; }

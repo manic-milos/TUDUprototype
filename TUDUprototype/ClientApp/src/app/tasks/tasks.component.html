@@ -16,5 +16,13 @@
       <td>{{task.taskName}}</td>
       <td>{{task.originalProjectID}}</td>
     </tr>
+    <tr>
+      <td></td>
+      <td>
+        <input #newTask type="text" 
+        (keyup.enter)="addNewTask(newTask.value)" />
+      </td>
+      <td></td>
+    </tr>
   </tbody>
 </table>
