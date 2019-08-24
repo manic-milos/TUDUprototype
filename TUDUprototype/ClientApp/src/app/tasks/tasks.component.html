@@ -19,8 +19,8 @@
     <tr>
       <td></td>
       <td>
-        <input #newTask type="text" 
-        (keyup.enter)="addNewTask(newTask.value)" />
+        <input [(ngModel)]='newTask.TaskName' type="text" 
+        (keyup.enter)="addNewTask()" />
       </td>
       <td></td>
     </tr>

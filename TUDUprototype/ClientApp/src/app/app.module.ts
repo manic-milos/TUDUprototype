@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { TasksComponent } from './tasks/tasks.component';
+import { ListsComponent } from './lists/lists.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TasksComponent } from './tasks/tasks.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    TasksComponent
+    TasksComponent,
+    ListsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -28,7 +30,8 @@ import { TasksComponent } from './tasks/tasks.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      {path: 'tasks', component: TasksComponent}
+      {path: 'tasks', component: TasksComponent},
+      {path:'lists',component:ListsComponent}
     ])
   ],
   providers: [],

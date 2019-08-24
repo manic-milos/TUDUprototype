@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,37 +20,45 @@ namespace TUDUprototype.Controllers
         }
 
         [HttpGet("TaskItems")]
-        public IEnumerable<Models.TaskItem> TaskItems()
+        public async Task<IActionResult> TaskItems()
         {
             try
             {
-                var r = dbContext.TaskItems.ToList();
-                return r;
+                var r = dbContext.TaskItems;
+                return Ok(r);
             }
             catch(Exception e)
             {
-                throw e;
+                return new ObjectResult(e)
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
             }
         }
 
         [HttpPost("TaskItem")]
-        public Models.TaskItem PostTaskItem([FromBody] Models.TaskItem taskItem)
+        public async Task<IActionResult> PostTaskItem([FromBody] Models.TaskItem taskItem)
         {
             try
             {
+                if(taskItem.ID!=null)
+                    return new BadRequestObjectResult(ModelState);
+
                 if(!ModelState.IsValid)
                 {
-                    throw new ArgumentException();
+                    return new BadRequestObjectResult(ModelState);
                 }
-
-                dbContext.TaskItems.Add(taskItem);
-                dbContext.SaveChanges();
+                await dbContext.TaskItems.AddAsync(taskItem);
+                await dbContext.SaveChangesAsync();
                 var result = dbContext.Entry(taskItem).Entity;
-                return result;
+                return Ok(result);
             }
             catch(Exception e)
             {
-                throw e;
+                return new ObjectResult(e)
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
             }
         }
     }

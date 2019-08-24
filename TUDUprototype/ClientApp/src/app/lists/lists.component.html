@@ -1,0 +1,31 @@
+<h1>Lists</h1>
+
+<p *ngIf="!lists"><em>Loading...</em></p>
+
+<!-- <table *ngIf="lists">
+  <thead>
+    <tr>
+      <th>ListID</th>
+      <th>ListName</th>
+      <th>ProjectID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let list of lists'>
+      <td>{{list.listID}}</td>
+      <td>{{list.listName}}</td>
+      <td>{{list.projectID}}</td>
+      
+    </tr>
+  </tbody>
+</table> -->
+
+<div *ngIf='lists'>
+  <div *ngFor='let list of lists'>
+    <div>
+      <p>{{list.listID}}</p>
+      <app-tasks [ListID]='list.listID' ></app-tasks>
+    </div>
+  </div>
+</div>
+

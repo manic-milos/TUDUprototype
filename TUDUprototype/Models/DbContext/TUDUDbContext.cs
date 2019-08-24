@@ -16,10 +16,12 @@ namespace TUDUprototype.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new TaskItemsConfiguration());
-
+            modelBuilder.ApplyConfiguration(new TaskListConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<TaskItem> TaskItems { get; set; }
+
+        public DbSet<TaskList> TaskLists { get; set; }
     }
 }

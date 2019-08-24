@@ -1,6 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import { httpFactory } from '@angular/platform-server/src/http';
 
 @Component({
   selector: 'app-tasks',
@@ -8,20 +7,24 @@ import { httpFactory } from '@angular/platform-server/src/http';
   styleUrls: ['./tasks.component.css']
 })
 export class TasksComponent implements OnInit {
-  public tasks: TaskItem[];
-  public newTaskName: string;
-  m_http: HttpClient;
-  m_baseUrl: string;
+  @Input() ListID: number;
+  public tasks: ITaskItem[];
+  public newTask: ITaskItem;
+  http: HttpClient;
+  baseUrl: string;
+
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string ) {
-    this.m_http = http;
-    this.m_baseUrl = baseUrl;
-    this.loadTasks();
+    this.http = http;
+    this.baseUrl = baseUrl;
   }
   ngOnInit() {
+    this.loadTasks();
+    this.newTask = new TaskItem();
   }
 
   loadTasks() {
-    this.m_http.get<TaskItem[]>(this.m_baseUrl + 'api/TaskItems/TaskItems')
+    console.log(this.ListID);
+    this.http.get<ITaskItem[]>(this.baseUrl + 'api/TaskItems/TaskItems')
     .subscribe(result => {
       console.log(result);
         this.tasks = result;
@@ -29,18 +32,15 @@ export class TasksComponent implements OnInit {
       }, error => console.error(error));
   }
 
-  addNewTask(input_element: any) {
-    var newtask = {
-      id: null,
-      taskName: input_element.value,
-      originalProjectID: 5
-    };
-    this.m_http.post<TaskItem>(
-      this.m_baseUrl + 'api/TaskItems/TaskItem', newtask)
+  addNewTask() {
+    // console.log(this.ListID);
+    var newtask=this.newTask;
+    this.http.post<ITaskItem>(
+      this.baseUrl + 'api/TaskItems/TaskItem', newtask)
     .subscribe(result => {
       console.log(result);
       this.loadTasks();
-      input_element.value = '';
+      this.newTask = new TaskItem();
       }, error => console.log(error));
 
   }
@@ -48,8 +48,22 @@ export class TasksComponent implements OnInit {
 
 }
 
-interface TaskItem {
+interface ITaskItem {
   id: number;
   taskName: string;
   originalProjectID: number;
+}
+
+
+export class TaskItem implements ITaskItem
+{
+  id: number;
+  taskName: string;
+  originalProjectID: number;
+
+  constructor() {
+    this.id = null;
+    this.taskName = '';
+    this.originalProjectID = 5;
+  }
 }
