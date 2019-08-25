@@ -1,5 +1,28 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { unescapeIdentifier } from '@angular/compiler';
+import { isUndefined } from 'util';
+
+
+interface ITaskItem {
+  id: number;
+  taskName: string;
+  originalProjectID: number;
+}
+
+
+export class TaskItem implements ITaskItem {
+  id: number;
+  taskName: string;
+  originalProjectID: number;
+
+
+  constructor() {
+    this.id = null;
+    this.taskName = '';
+    this.originalProjectID = 5;
+  }
+}
 
 @Component({
   selector: 'app-tasks',
@@ -24,7 +47,11 @@ export class TasksComponent implements OnInit {
 
   loadTasks() {
     console.log(this.ListID);
-    this.http.get<ITaskItem[]>(this.baseUrl + 'api/TaskItems/TaskItems')
+    let query = '';
+    if (!isUndefined(this.ListID)) {
+      query += '?ListID=' + this.ListID;
+    }
+    this.http.get<ITaskItem[]>(this.baseUrl + 'api/TaskItems/TaskItems' + query)
     .subscribe(result => {
       console.log(result);
         this.tasks = result;
@@ -33,10 +60,12 @@ export class TasksComponent implements OnInit {
   }
 
   addNewTask() {
-    // console.log(this.ListID);
-    var newtask=this.newTask;
+    let query = '';
+    if (!isUndefined(this.ListID)) {
+      query += '?ListID=' + this.ListID;
+    }
     this.http.post<ITaskItem>(
-      this.baseUrl + 'api/TaskItems/TaskItem', newtask)
+      this.baseUrl + 'api/TaskItems/TaskItem' + query, this.newTask)
     .subscribe(result => {
       console.log(result);
       this.loadTasks();
@@ -48,22 +77,3 @@ export class TasksComponent implements OnInit {
 
 }
 
-interface ITaskItem {
-  id: number;
-  taskName: string;
-  originalProjectID: number;
-}
-
-
-export class TaskItem implements ITaskItem
-{
-  id: number;
-  taskName: string;
-  originalProjectID: number;
-
-  constructor() {
-    this.id = null;
-    this.taskName = '';
-    this.originalProjectID = 5;
-  }
-}

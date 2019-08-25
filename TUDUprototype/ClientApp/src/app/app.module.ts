@@ -11,6 +11,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { ListsComponent } from './lists/lists.component';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ListsComponent } from './lists/lists.component';
     CounterComponent,
     FetchDataComponent,
     TasksComponent,
-    ListsComponent
+    ListsComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

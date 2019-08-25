@@ -27,7 +27,7 @@ export class ListsComponent implements OnInit {
 
 }
 
-interface ITaskList {
+export interface ITaskList {
   listID: number;
   listName: string;
   projectID: number;

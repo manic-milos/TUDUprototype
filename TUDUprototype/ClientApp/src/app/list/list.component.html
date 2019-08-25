@@ -1,0 +1,26 @@
+<p *ngIf="!tasks"><em>Loading...</em></p>
+
+<table *ngIf="tasks">
+  <thead>
+    <tr>
+      <th>OrderNo</th>
+      <th>TaskID</th>
+      <th>TaskName</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let task of tasks'>
+      <td>{{task.orderNo}}</td>
+      <td>{{task.taskID}}</td>
+      <td>{{task.taskName}}</td>
+    </tr>
+    <!-- <tr>
+      <td></td>
+      <td>
+        <input [(ngModel)]='newTask.TaskName' type="text" 
+        (keyup.enter)="addNewTask()" />
+      </td>
+      <td></td>
+    </tr> -->
+  </tbody>
+</table>

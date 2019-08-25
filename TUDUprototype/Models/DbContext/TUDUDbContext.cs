@@ -17,11 +17,14 @@ namespace TUDUprototype.Models
         {
             modelBuilder.ApplyConfiguration(new TaskItemsConfiguration());
             modelBuilder.ApplyConfiguration(new TaskListConfiguration());
+            modelBuilder.ApplyConfiguration(new TaskInListConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<TaskItem> TaskItems { get; set; }
 
         public DbSet<TaskList> TaskLists { get; set; }
+
+        public DbSet<TaskInList> TasksInLists{ get; set; }
     }
 }

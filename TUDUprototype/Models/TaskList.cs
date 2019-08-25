@@ -35,6 +35,8 @@ namespace TUDUprototype.Models
             builder.Property((x) => x.ProjectID)
                 .HasColumnType("int");
 
+            
+
         }
     }
 }
