@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TUDUprototype", "TUDUprototype\TUDUprototype.csproj", "{3977FAD8-62E2-492B-BF06-CA9A2894D087}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TUDUprototype", "TUDUprototype\TUDUprototype.csproj", "{3977FAD8-62E2-492B-BF06-CA9A2894D087}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TUDUprototype.Tests", "TUDUprototype.Tests\TUDUprototype.Tests.csproj", "{44B3FC9B-AF7D-4B14-912A-7BAC031DD88D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{3977FAD8-62E2-492B-BF06-CA9A2894D087}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3977FAD8-62E2-492B-BF06-CA9A2894D087}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3977FAD8-62E2-492B-BF06-CA9A2894D087}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44B3FC9B-AF7D-4B14-912A-7BAC031DD88D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44B3FC9B-AF7D-4B14-912A-7BAC031DD88D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44B3FC9B-AF7D-4B14-912A-7BAC031DD88D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44B3FC9B-AF7D-4B14-912A-7BAC031DD88D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

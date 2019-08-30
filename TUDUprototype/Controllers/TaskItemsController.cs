@@ -25,7 +25,7 @@ namespace TUDUprototype.Controllers
         {
             try
             {
-                var r = dbContext.TaskItems.AsQueryable();
+                var r = await Task.Run(()=>dbContext.TaskItems.AsQueryable());
                 return Ok(r.ToList());
             }
             catch(Exception e)
@@ -42,7 +42,7 @@ namespace TUDUprototype.Controllers
         {
             try
             {
-                var r = await dbContext.GetTasksInListDTO(ListID);
+                var r = await dbContext.GetTasksInListDTOAsync(ListID);
                 return Ok(r);
             }
             catch(Exception e)

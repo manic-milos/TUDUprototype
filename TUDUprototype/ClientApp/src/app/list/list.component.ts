@@ -25,6 +25,7 @@ export class ListComponent implements OnInit {
       .subscribe(result => {
         this.tasks = result;
         console.log(this.tasks);
+        console.log(this);
       },
         error => console.error(error));
   }
