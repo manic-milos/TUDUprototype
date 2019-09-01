@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace TUDUprototype.Models.DTOs
     {
         public int? TaskID { get; set; }
         public string TaskName { get; set; }
-        public int OrderNo { get; set; }
+        public int? OrderNo { get; set; }
 
         public TaskInListDTO(TaskItem task, TaskInList til)
         {
@@ -29,7 +30,7 @@ namespace TUDUprototype.Models.DTOs
             {
                 ListID = ListID,
                 OrderNo = OrderNo,
-                TaskID = TaskID.Value
+                TaskID = TaskID
             };
         }
     }
@@ -50,13 +51,41 @@ namespace TUDUprototype.Models.DTOs
 
         public static async Task ReplaceTasksInList(this TUDUDbContext dbContext, int ListID, IEnumerable<TaskInListDTO> allTasks)
         {
-            var tils = await Task.Run(() => dbContext.TasksInLists.Where((x) => x.ListID == ListID));
-            dbContext.AttachRange(tils);
-            await Task.Run(() => dbContext.TasksInLists.RemoveRange(tils));
-            var newTils = from t in allTasks
-                          select t.ToEntity(ListID);
-            await dbContext.TasksInLists.AddRangeAsync(newTils);
+			var list = dbContext.TaskLists.Include((x) => x.TasksInLists).FirstOrDefault((l) => l.ListID == ListID);
+			if (list == null)
+				throw new ArgumentOutOfRangeException("listID not in table");
+            await Task.Run(() => dbContext.TasksInLists.RemoveRange(list.TasksInLists));
             await dbContext.SaveChangesAsync();
+
+            //add new
+            var newTils = allTasks.Where((x) => x.TaskID == null);
+            if (newTils.Any())
+            {
+                var newTasks = newTils.Select((x) => new TaskItem()
+                {
+                    ID = null,
+                    OriginalProjectID = list.ProjectID,
+                    TaskName = x.TaskName,
+                    TasksInLists=new List<TaskInList>() { x.ToEntity(ListID) }
+                });
+                await dbContext.AddRangeAsync(newTasks);
+                await dbContext.SaveChangesAsync();
+
+            }
+
+
+            //insert all tasks in list
+            var newTilList = allTasks.Where((x)=>x.TaskID!=null).Select(t => t.ToEntity(ListID));
+            await dbContext.TasksInLists.AddRangeAsync(newTilList);
+            await dbContext.SaveChangesAsync();
+
+			var nameTilList = allTasks.Where((x) => x.TaskID != null);
+			foreach(var tl in nameTilList)
+			{
+				var t = await dbContext.TaskItems.SingleAsync((x)=>x.ID==tl.TaskID);
+				t.TaskName = tl.TaskName;
+			}
+			await dbContext.SaveChangesAsync();
         }
     }
 }

@@ -6,21 +6,25 @@
       <th>OrderNo</th>
       <th>TaskID</th>
       <th>TaskName</th>
+      <th></th>
+      <th><button (click)="update()">update</button></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor='let task of tasks'>
       <td>{{task.orderNo}}</td>
       <td>{{task.taskID}}</td>
-      <td>{{task.taskName}}</td>
+      <td><input type="text" [(ngModel)]='task.taskName'/></td>
+      <td><button (click)='up(task)'>up</button></td>
+      <td><button (click)='down(task)'>down</button></td>
     </tr>
-    <!-- <tr>
+    <tr>
       <td></td>
       <td>
-        <input [(ngModel)]='newTask.TaskName' type="text" 
-        (keyup.enter)="addNewTask()" />
+        <input [(ngModel)]='newTask.taskName' type="text"
+               (keyup.enter)="addNewTask()" />
       </td>
       <td></td>
-    </tr> -->
+    </tr>
   </tbody>
 </table>

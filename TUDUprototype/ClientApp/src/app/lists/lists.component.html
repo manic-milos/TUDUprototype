@@ -6,10 +6,10 @@
 <div *ngIf='lists'>
   <div *ngFor='let list of lists'>
     <div>
-      <p>
-        <span>{{list.listID}}</span>
-        <span>{{list.listName}}</span>
-      </p>
+      <div>
+        <h2>{{list.listID}}</h2>
+        <h2>{{list.listName}}</h2>
+      </div>
       <app-list [List]='list' ></app-list>
     </div>
   </div>

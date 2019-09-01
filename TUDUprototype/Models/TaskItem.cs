@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,19 +13,16 @@ namespace TUDUprototype.Models
     {
         public TaskItem()
         {
+            TasksInLists = new List<TaskInList>();
         }
 
-        public TaskItem(int iD, string taskName, int originalProjectID)
-        {
-            ID = iD;
-            TaskName = taskName;
-            OriginalProjectID = originalProjectID;
-        }
 
         public int? ID { get; set; }
         [MaxLength(50)]
         public string TaskName { get; set; }
         public int OriginalProjectID { get; set; }
+        [InverseProperty("Task")]
+        public virtual List<TaskInList> TasksInLists { get; set; }
     }
 
     public class TaskItemsConfiguration : IEntityTypeConfiguration<TaskItem>
@@ -42,6 +40,7 @@ namespace TUDUprototype.Models
             //configuration for columns
             builder.Property((x) => x.TaskName).HasColumnType("nvarchar(50)");
             builder.Property((x) => x.OriginalProjectID).HasColumnType("int").IsRequired();
+
 
         }
     }

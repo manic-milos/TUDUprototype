@@ -12,12 +12,11 @@ namespace TUDUprototype.Tests
 {
     public class TaskInListControllerUnitTest
     {
-
         [Fact]
         public async Task TestPutTasksInListClearAsync()
         {
             //Arrange
-            var dbContext = new DbContextMock.DbContextMocker().GetContext(nameof(TestPutTasksInListClearAsync));
+            var dbContext = new DbContextMock.DbContextMocker().GetContext();
             var controller = new TaskInListController(dbContext);
 
             //Act
@@ -27,12 +26,14 @@ namespace TUDUprototype.Tests
 
             //Assert
             Assert.Empty(dbContext.TasksInLists.Where((x) => x.ListID == listID));
-        }
+			dbContext.Dispose();
+
+		}
         [Fact]
-        public async Task TestPutTasksInListReplace1Async()
+        public async Task TestPutTasksInList_CleanAndPutAddExisting1Async()
         {
             //Arrange
-            var dbContext = new DbContextMock.DbContextMocker().GetContext(nameof(TestPutTasksInListReplace1Async));
+            var dbContext = new DbContextMock.DbContextMocker().GetContext();
             var controller = new TaskInListController(dbContext);
 
             //Act
@@ -51,8 +52,33 @@ namespace TUDUprototype.Tests
             //Assert
             Assert.Equal(1,dbContext.TasksInLists.Count((x) => x.ListID == listID));
             Assert.Equal(task.ID, dbContext.TasksInLists.First((x) => x.ListID == listID).TaskID);
-        }
-        //TODO da se doda novi task
-        //TODO da se promeni ime starog taska
-    }
+			dbContext.Dispose();
+		}
+
+		[Fact]
+		public async Task TestPutTasksInList_CleanAndPutAdd1Async()
+		{
+			//Arrange
+			var dbContext = new DbContextMock.DbContextMocker().GetContext();
+			var controller = new TaskInListController(dbContext);
+
+			//Act
+			int listID = 1;
+			var response = await controller.PutTasksInList(listID, new List<TaskInListDTO>() {
+				new TaskInListDTO()
+				{
+					OrderNo=1,
+					TaskID=null,
+					TaskName="test add task"
+				}
+			}) as ObjectResult;
+
+
+			//Assert
+			Assert.Equal(1, dbContext.TasksInLists.Count((x) => x.ListID == listID));
+			//Assert.Equal(task.ID, dbContext.TasksInLists.First((x) => x.ListID == listID).TaskID);
+			dbContext.Dispose();
+		}
+
+	}
 }
